@@ -1,0 +1,29 @@
+# dependências
+/node_modules
+
+# next.js
+/.next/
+/out/
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+
+# variáveis de ambiente — a senha do painel e a chave do Supabase moram aqui
+.env*
+!.env.example
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# saída dos scripts de conferência
+/scripts/teste.xlsx
+/scripts/conferencia.png

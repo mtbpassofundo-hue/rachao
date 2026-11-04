@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <title>Flyer do Rachão Bike 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Mesmas cores do site, que saíram do flyer de 2025. */
+      :root {
+        --limao: #95f43e;
+        --petroleo: #072e2d;
+        --fundo: #03171a;
+        --neve: #eef5ef;
+        --neve-fraca: #adc4bd;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        width: 1080px;
+        height: 1350px;
+        overflow: hidden;
+        font-family: 'Barlow', sans-serif;
+        color: var(--neve);
+        background: var(--fundo);
+      }
+
+      .peca {
+        position: relative;
+        width: 1080px;
+        height: 1350px;
+        display: flex;
+        flex-direction: column;
+        isolation: isolate;
+      }
+
+      /* Fundo: o impresso de 2025 tinha foto do pelotão. Sem a foto em alta,
+         o lugar dela é ocupado por um degradê fundo com a mesma textura
+         diagonal do site — some na impressão, aparece na tela. */
+      .fundo,
+      .trama,
+      .brilho {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+      }
+
+      .fundo {
+        background:
+          radial-gradient(
+            120% 80% at 80% 0%,
+            rgba(149, 244, 62, 0.16),
+            transparent 60%
+          ),
+          radial-gradient(
+            100% 70% at 0% 100%,
+            rgba(26, 107, 97, 0.55),
+            transparent 65%
+          ),
+          linear-gradient(170deg, #06252a 0%, #03171a 55%, #052226 100%);
+      }
+
+      .trama {
+        background-image: repeating-linear-gradient(
+          115deg,
+          transparent 0 22px,
+          rgba(149, 244, 62, 0.05) 22px 25px
+        );
+      }
+
+      .brilho {
+        background: radial-gradient(
+          60% 40% at 50% 28%,
+          rgba(149, 244, 62, 0.1),
+          transparent 70%
+        );
+      }
+
+      .titulo {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-weight: 800;
+        text-transform: uppercase;
+        line-height: 0.92;
+        letter-spacing: -0.005em;
+      }
+
+      .rotulo {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+      }
+
+      /* ── Topo: as duas marcas ───────────────────────────────────────── */
+      .marcas {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 38px;
+        padding: 34px 0 22px;
+      }
+
+      .marcas img.comercial {
+        height: 74px;
+      }
+
+      .marcas .risco {
+        width: 2px;
+        height: 62px;
+        background: rgba(255, 255, 255, 0.22);
+      }
+
+      .marcas .apoio {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .marcas img.rdn {
+        height: 72px;
+      }
+
+      .marcas .apoio span {
+        font-size: 17px;
+        color: var(--neve-fraca);
+        line-height: 1.3;
+      }
+
+      /* ── Tarjas do título ───────────────────────────────────────────── */
+      .faixa-escura {
+        align-self: center;
+        background: var(--petroleo);
+        border: 2px solid rgba(149, 244, 62, 0.45);
+        padding: 11px 30px;
+        font-size: 33px;
+        color: var(--limao);
+      }
+
+      .faixa-limao {
+        margin-top: 14px;
+        background: var(--limao);
+        color: #052226;
+        padding: 16px 0 18px;
+        text-align: center;
+        font-size: 92px;
+      }
+
+      .faixa-limao small {
+        display: block;
+        font-size: 34px;
+        letter-spacing: 0.3em;
+        font-weight: 700;
+        margin-top: 10px;
+      }
+
+      /* ── Quando e onde ──────────────────────────────────────────────── */
+      .quando {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 22px;
+        padding: 0 60px;
+      }
+
+      .quando div {
+        background: rgba(7, 46, 45, 0.92);
+        border: 2px solid rgba(255, 255, 255, 0.12);
+        padding: 12px 22px;
+        text-align: center;
+      }
+
+      .quando .valor {
+        font-size: 40px;
+        color: var(--neve);
+      }
+
+      .quando .nota {
+        font-size: 16px;
+        color: var(--limao);
+        margin-top: 6px;
+      }
+
+      .trajeto {
+        margin: 20px 60px 0;
+        background: var(--limao);
+        color: #052226;
+        padding: 13px 24px;
+        text-align: center;
+        font-size: 24px;
+        line-height: 1.22;
+      }
+
+      /* ── O coração da peça: a inscrição é um brinquedo ──────────────── */
+      .causa {
+        margin: 20px 60px 0;
+        border: 3px solid var(--limao);
+        background: rgba(7, 46, 45, 0.9);
+        padding: 20px 28px 22px;
+        text-align: center;
+      }
+
+      .causa .chamada {
+        font-size: 52px;
+        color: var(--limao);
+      }
+
+      .causa p {
+        margin-top: 10px;
+        font-size: 21px;
+        line-height: 1.35;
+        color: var(--neve);
+      }
+
+      .pontos {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 16px;
+        text-align: left;
+      }
+
+      .pontos div {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: rgba(3, 23, 26, 0.75);
+        border: 1px solid rgba(149, 244, 62, 0.3);
+        padding: 9px 13px;
+        font-size: 19px;
+        font-weight: 600;
+        line-height: 1.15;
+      }
+
+      .pontos span {
+        flex: none;
+        width: 30px;
+        height: 30px;
+        display: grid;
+        place-items: center;
+        background: var(--limao);
+        color: #052226;
+        font-family: 'Barlow Condensed', sans-serif;
+        font-weight: 800;
+        font-size: 21px;
+      }
+
+      /* ── Modalidades ────────────────────────────────────────────────── */
+      .modalidades {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin: 18px 60px 0;
+      }
+
+      .modalidades article {
+        background: rgba(7, 46, 45, 0.9);
+        border: 2px solid rgba(255, 255, 255, 0.12);
+        padding: 14px 14px 16px;
+        text-align: center;
+      }
+
+      .modalidades h3 {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 34px;
+        line-height: 1;
+        color: var(--neve);
+      }
+
+      .modalidades p {
+        margin-top: 8px;
+        font-size: 17px;
+        line-height: 1.25;
+        color: var(--limao);
+        font-weight: 600;
+      }
+
+      /* ── Prazo ──────────────────────────────────────────────────────── */
+      .prazo {
+        margin-top: 18px;
+        background: var(--limao);
+        color: #052226;
+        padding: 12px 0;
+        text-align: center;
+        font-size: 30px;
+      }
+
+      /* ── Rodapé ─────────────────────────────────────────────────────── */
+      .rodape {
+        margin-top: auto;
+        padding: 22px 60px 34px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .rodape .inscricao .rotulo {
+        font-size: 18px;
+        color: var(--limao);
+      }
+
+      .rodape .endereco {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-weight: 800;
+        font-size: 44px;
+        line-height: 1;
+        margin-top: 8px;
+        color: var(--neve);
+      }
+
+      .rodape .contato {
+        margin-top: 14px;
+        font-size: 20px;
+        color: var(--neve-fraca);
+        line-height: 1.35;
+      }
+
+      .selo {
+        flex: none;
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        border: 4px solid var(--limao);
+        display: grid;
+        place-items: center;
+        text-align: center;
+        background: rgba(149, 244, 62, 0.12);
+      }
+
+      .selo b {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 27px;
+        line-height: 0.95;
+        color: var(--limao);
+      }
+
+      .selo i {
+        display: block;
+        font-style: normal;
+        font-size: 15px;
+        letter-spacing: 0.12em;
+        font-weight: 700;
+        color: var(--neve);
+        margin-top: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="peca">
+      <div class="fundo"></div>
+      <div class="trama"></div>
+      <div class="brilho"></div>
+
+      <div class="marcas">
+        <img class="comercial" src="logo-comercial.png" alt="Clube Comercial" />
+        <div class="risco"></div>
+        <div class="apoio">
+          <img class="rdn" src="logo-rdn.png" alt="Rachão da Noite" />
+          <span>
+            apoio<br /><strong>Rachão da Noite</strong>
+          </span>
+        </div>
+      </div>
+
+      <div class="faixa-escura rotulo">Cicloturismo · Pedal Kids · Rachão</div>
+
+      <div class="faixa-limao titulo">
+        Rachão Bike 2026
+        <small>2ª edição · Clube Comercial</small>
+      </div>
+
+      <div class="quando">
+        <div>
+          <div class="valor titulo">29/11/2026</div>
+          <div class="nota rotulo">Domingo</div>
+        </div>
+        <div>
+          <div class="valor titulo">08:00</div>
+          <div class="nota rotulo">Concentração</div>
+        </div>
+        <div>
+          <div class="valor titulo">08:30</div>
+          <div class="nota rotulo">Largada</div>
+        </div>
+      </div>
+
+      <div class="trajeto">
+        → Saída do estacionamento da Arena, na Sede Campestre,<br />
+        estrada de chão e retorno ao estacionamento da Arena.
+      </div>
+
+      <div class="causa">
+        <div class="chamada titulo">A inscrição é um brinquedo</div>
+        <p>
+          Não se paga taxa. Leve um brinquedo em bom estado até
+          <strong>26/11/2026</strong> em um dos quatro pontos de coleta — tudo
+          é doado a crianças carentes.
+        </p>
+        <div class="pontos">
+          <div><span>1</span>Loja Bike Tour</div>
+          <div><span>2</span>Loja Gigante Bike</div>
+          <div><span>3</span>Sede Vergueiro do Clube Comercial</div>
+          <div><span>4</span>Sede Campestre do Clube Comercial</div>
+        </div>
+      </div>
+
+      <div class="modalidades">
+        <article>
+          <h3>Rachão</h3>
+          <p>Troféu do 1º ao 5º da geral</p>
+        </article>
+        <article>
+          <h3>Cicloturismo</h3>
+          <p>Medalha de participação</p>
+        </article>
+        <article>
+          <h3>Pedal Kids</h3>
+          <p>Medalha de participação</p>
+        </article>
+      </div>
+
+      <div class="prazo titulo">Brinquedo entregue até 26/11 — sem ele, sem largada</div>
+
+      <div class="rodape">
+        <div class="inscricao">
+          <div class="rotulo">Inscrições pelo site</div>
+          <div class="endereco">rachao.vercel.app</div>
+          <div class="contato">
+            Informações: Yuri Menezes — (54) 99180-9050<br />
+            Coordenador de ciclismo do Clube Comercial
+          </div>
+        </div>
+        <div class="selo">
+          <div>
+            <b>Aberto<br />ao público</b>
+            <i>Venha pedalar</i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

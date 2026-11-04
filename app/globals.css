@@ -1,0 +1,198 @@
+/* ─── Fontes ──────────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap');
+
+@import "tailwindcss";
+
+/* ─── Identidade do Rachão Bike ───────────────────────────────────────────────
+   As duas cores saíram do flyer de 2025, amostradas pixel a pixel: o limão das
+   faixas do título e o verde-petróleo das caixas de texto. O resto da escala é
+   construído a partir delas, para o site inteiro parecer o mesmo material
+   impresso que o pessoal já viu no grupo. */
+@theme {
+  --font-sans: 'Barlow', system-ui, -apple-system, sans-serif;
+  --font-display: 'Barlow Condensed', 'Barlow', system-ui, sans-serif;
+
+  --color-limao: #95f43e;
+  --color-limao-claro: #b6ff74;
+  --color-limao-escuro: #6fc81f;
+
+  /* Verde-petróleo do flyer, e dois vizinhos: um mais fundo para o corpo da
+     página e um mais claro para cartão sobre cartão. */
+  --color-petroleo-950: #03171a;
+  --color-petroleo-900: #072e2d;
+  --color-petroleo-800: #0b3b38;
+  --color-petroleo-700: #11504a;
+  --color-petroleo-600: #1a6b61;
+
+  --color-neve-100: #eef5ef;
+  --color-neve-300: #adc4bd;
+  --color-neve-500: #6d8a85;
+
+  /* Dourado do símbolo do RDN — aparece só onde o RDN aparece. */
+  --color-rdn: #e8a020;
+
+  --color-alerta: #ff5a4d;
+}
+
+/* ─── Base ────────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* O cabeçalho é fixo: sem isso as âncoras param embaixo dele. */
+  scroll-padding-top: 5.5rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-petroleo-950);
+  color: var(--color-neve-100);
+  min-height: 100vh;
+}
+
+::selection {
+  background-color: var(--color-limao);
+  color: #03171a;
+}
+
+/* Foco visível em tudo que é operável pelo teclado. */
+:focus-visible {
+  outline: 2px solid var(--color-limao);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ─── Tipografia de display ───────────────────────────────────────────────── */
+.titulo {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.005em;
+  /* Caixa alta com acento (Ã, Ç) precisa de folga: abaixo disso o til encosta
+     na linha de cima. */
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.rotulo {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* ─── Faixa limão do flyer ────────────────────────────────────────────────────
+   No impresso o título vem dentro de uma tarja limão que atravessa a peça de
+   ponta a ponta. Aqui ela é um bloco com a mesma proporção de folga. */
+.tarja {
+  background-color: var(--color-limao);
+  color: var(--color-petroleo-950);
+  padding: 0.3em 0.55em;
+}
+
+/* Textura diagonal sutil, para o verde chapado não ficar morto. */
+.trama {
+  background-image: repeating-linear-gradient(
+    115deg,
+    transparent 0 14px,
+    rgba(149, 244, 62, 0.045) 14px 16px
+  );
+}
+
+/* ─── Faixa rolante ───────────────────────────────────────────────────────── */
+.esteira {
+  display: flex;
+  width: max-content;
+  animation: correr 34s linear infinite;
+}
+
+@keyframes correr {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* Duas cópias idênticas do conteúdo: ao andar metade, emenda invisível. */
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .esteira {
+    animation: none;
+  }
+}
+
+/* ─── Formulário ──────────────────────────────────────────────────────────── */
+.campo {
+  width: 100%;
+  border-radius: 0.625rem;
+  border: 1px solid var(--color-petroleo-700);
+  background-color: var(--color-petroleo-900);
+  padding: 0.75rem 0.9rem;
+  font-size: 1rem;
+  color: var(--color-neve-100);
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.campo::placeholder {
+  color: var(--color-neve-500);
+}
+
+.campo:hover {
+  border-color: var(--color-petroleo-600);
+}
+
+.campo:focus {
+  outline: none;
+  border-color: var(--color-limao);
+  background-color: var(--color-petroleo-800);
+}
+
+.campo[aria-invalid='true'] {
+  border-color: var(--color-alerta);
+}
+
+/* O seletor de data nasce com o ícone escuro sobre fundo escuro. */
+input[type='date']::-webkit-calendar-picker-indicator {
+  filter: invert(1) opacity(0.55);
+  cursor: pointer;
+}
+
+/* ─── Cartão de modalidade ────────────────────────────────────────────────────
+   O rádio de verdade fica escondido atrás do cartão inteiro: no celular, alvo
+   de toque grande vale mais do que bolinha bonita. */
+.escolha {
+  display: block;
+  cursor: pointer;
+  border-radius: 1rem;
+  border: 1px solid var(--color-petroleo-700);
+  background-color: var(--color-petroleo-900);
+  padding: 1.1rem 1.25rem;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.escolha:hover {
+  border-color: var(--color-petroleo-600);
+}
+
+.escolha:has(input:checked) {
+  border-color: var(--color-limao);
+  background-color: color-mix(in srgb, var(--color-limao) 10%, transparent);
+}
+
+.escolha:has(input:focus-visible) {
+  outline: 2px solid var(--color-limao);
+  outline-offset: 3px;
+}
