@@ -42,15 +42,18 @@ export type IdPercurso = (typeof CATEGORIAS)[number]["id"];
  * Como os dois percursos se relacionam, medido no GPX:
  *
  *   km  0,0 – 13,8  os dois juntos, saindo do Clube
- *   km 13,8 – 16,2  só o Rachão, indo até o ponto de apoio
- *   km 16,2 – 38,2  a corrida do Rachão: sai do apoio e volta nele
- *   km 38,2 – 40,6  só o Rachão, voltando do apoio até a bifurcação
- *   km 40,6 – 54,5  os dois juntos de novo, de volta ao Clube
+ *   km 13,8 – 40,6  a corrida do Rachão: sai do apoio e volta nele
+ *   km 40,6 – 54,5  os dois juntos de novo, de volta ao Clube no seu ritmo
  *
- * O Cicloturismo cobre o mesmo primeiro e último pedaço: a bifurcação cai no
- * km 13,8 dele também, e dali ele já emenda na volta.
+ * O ponto de apoio é a bifurcação: o mesmo km 13,8 nos dois percursos. Para o
+ * Cicloturismo é o ponto de retorno, bem no meio da prova dele; para o
+ * Rachão é onde a parte cronometrada começa e termina.
+ *
+ * Por que aqui e não 2,4 km adiante: a ida e a volta do Rachão usam a mesma
+ * estrada do km 12 ao km 18 — qualquer ponto nesse pedaço fecha um laço. O
+ * que decide é o Cicloturismo, que só passa neste.
  */
-export const BIFURCACAO = { lat: -28.30999, lon: -52.25787 } as const;
+export const APOIO = { lat: -28.30999, lon: -52.25787 } as const;
 
 export type TipoDePonto = "apoio" | "marco";
 
@@ -81,25 +84,13 @@ export const PONTOS_INTERESSE: {
     tipo: "apoio",
     numero: 1,
     rotulo: "Apoio",
-    detalhe: "O Rachão passa duas vezes aqui: na ida e na volta da corrida.",
-    // km 16,23 do Rachão, tirado do próprio arquivo. O mesmo lugar é o km
-    // 38,15 na volta — os dois pontos distam 12 m, o que confirma os dois
-    // quilômetros que a organização passou.
-    lat: -28.32824,
-    lon: -52.25627,
-    // Haste longa: o traçado passa duas vezes por aqui e o selo precisa sair
-    // de cima das duas linhas.
-    desvio: 2.2,
-  },
-  {
-    nome: "Bifurcação",
-    tipo: "marco",
-    // km 13,8 nos dois percursos: é onde o Rachão desgarra para buscar o
-    // ponto de apoio e o Cicloturismo já emenda a volta.
-    lat: BIFURCACAO.lat,
-    lon: BIFURCACAO.lon,
-    para: { dx: -1, dy: 0 },
-    desvio: 2.6,
+    detalhe:
+      "Na bifurcação, km 13,8 das duas provas. O Cicloturismo retorna aqui; o Rachão começa e termina a corrida aqui.",
+    lat: APOIO.lat,
+    lon: APOIO.lon,
+    // Haste longa: a ida e a volta passam coladas neste ponto, e o selo
+    // precisa sair de cima das duas linhas.
+    desvio: 2.4,
   },
 ];
 
@@ -117,10 +108,11 @@ export const TRECHOS = [
     /** Amarelo sobre o vermelho da categoria: lê-se de longe, no mapa claro. */
     cor: "#ffc400",
     categoria: "rachao" as IdPercurso,
-    kmDe: 16.23,
-    kmAte: 38.15,
-    /** 21,92 km — o número que a organização divulga. */
-    extensao: "21,92 km",
+    // Sai do apoio no km 13,8 e volta nele no km 40,6 — os dois pontos caem
+    // a 11 m um do outro no GPX.
+    kmDe: 13.8,
+    kmAte: 40.6,
+    extensao: "26,8 km",
   },
 ] as const;
 
@@ -140,16 +132,16 @@ export const REFERENCIAS = [
   },
   {
     marca: "1",
-    titulo: "Bifurcação no km 13,8",
+    titulo: "Ponto de apoio no km 13,8",
     detalhe:
-      "O Cicloturismo vira para a volta e o Rachão segue mais 2,4 km até o ponto de apoio. Na volta, o Rachão passa por aqui de novo no km 40,6.",
+      "A bifurcação, e o mesmo quilômetro nas duas provas. O Cicloturismo retorna daqui. O Rachão larga na corrida aqui e volta a este ponto no km 40,6 — são os 26,8 km em amarelo.",
     gps: "-28.30999, -52.25787",
   },
   {
     marca: "2",
-    titulo: "Ponto de apoio no km 16,2",
+    titulo: "Volta ao clube no seu ritmo",
     detalhe:
-      "Onde a corrida do Rachão começa. Os 21,92 km em amarelo saem daqui e voltam para cá, no km 38,2 — depois é o caminho de casa.",
-    gps: "-28.32824, -52.25627",
+      "Depois do apoio, os últimos 13,9 km são os mesmos para todo mundo, pelo caminho da ida. Sem cronômetro: é só voltar e encerrar o pedal.",
+    gps: "-28.26930, -52.35553",
   },
 ] as const;

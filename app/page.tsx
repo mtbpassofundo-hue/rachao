@@ -337,7 +337,7 @@ export default function Pagina() {
               <p className="text-neve-300">
                 <strong className="text-white">Onde a prova passa.</strong>{" "}
                 Mapa das estradas, altimetria quilômetro a quilômetro e o GPX
-                para o seu ciclocomputador — Rachão 54,5 km, com 21,92 km
+                para o seu ciclocomputador — Rachão 54,5 km, com 26,8 km
                 cronometrados, e Cicloturismo 27,6 km.
               </p>
               <Link

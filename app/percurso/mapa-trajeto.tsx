@@ -389,10 +389,25 @@ export function MapaTrajeto({
         );
       }
 
-      // A folga acompanha a haste: o selo mora fora do traçado e precisa de
-      // espaço na borda, senão sai pela lateral do mapa.
+      /*
+       * A folga tem de caber o selo mais afastado, não a haste padrão.
+       *
+       * Com folga fixa, um ponto que cai na ponta do traçado empurrava o selo
+       * para fora da caixa: foi o que aconteceu com o apoio no mapa do
+       * Cicloturismo, que termina justamente nele. Aqui o maior deslocamento
+       * de verdade é medido, e a ele se somam o raio do selo e a etiqueta que
+       * pendura embaixo.
+       */
+      const alcance = [
+        ...pontos,
+        ...trechos.map((t) => ({ ...t, desvio: undefined })),
+      ].reduce((maior, ponto) => {
+        const { dx, dy } = deslocamento(ponto as PontoNoMapa, medidas);
+        return Math.max(maior, Math.abs(dx), Math.abs(dy));
+      }, medidas.fuga);
+
       m.fitBounds(linhaToda.current.getBounds(), {
-        padding: [medidas.fuga + 14, medidas.fuga + 14],
+        padding: [alcance + 40, alcance + 40],
       });
 
       // Os nomes entram só depois de o ciclista aproximar dois níveis.

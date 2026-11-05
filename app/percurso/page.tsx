@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: `Percurso · ${EVENTO.nome}`,
     description:
-      "Explore o trajeto ponto a ponto e baixe o GPX: Rachão 54,5 km, com 21,92 km de corrida cronometrada, e Cicloturismo 27,6 km.",
+      "Explore o trajeto ponto a ponto e baixe o GPX: Rachão 54,5 km, com 26,8 km de corrida cronometrada, e Cicloturismo 27,6 km.",
     locale: "pt_BR",
     type: "website",
   },
@@ -214,8 +214,9 @@ export default function PercursoPagina() {
           </h2>
           <p className="mt-5 max-w-[62ch] text-lg text-neve-300">
             Os dois percursos saem juntos do estacionamento da Arena e andam
-            lado a lado nos primeiros 13,8 km. Dali o Cicloturismo vira para a
-            volta e o Rachão segue para a parte cronometrada.
+            lado a lado nos primeiros 13,8 km, até o ponto de apoio. Dali o
+            Cicloturismo retorna e o Rachão larga na parte cronometrada. No
+            fim, todo mundo volta pelo mesmo caminho, no seu ritmo.
           </p>
 
           <div className="mt-9 grid gap-4 sm:grid-cols-2">
@@ -313,8 +314,8 @@ export default function PercursoPagina() {
           </h2>
           <p className="mt-5 max-w-[62ch] text-lg text-neve-300">
             Quem está no percurso de 54,5 km faz a prova em três partes. A do
-            meio é a que vale: sai do ponto de apoio no km 16,2 e volta a ele
-            no km 38,2, e é esse pedaço que aparece em{" "}
+            meio é a que vale: sai do ponto de apoio no km 13,8 e volta a ele
+            no km 40,6, e é esse pedaço que aparece em{" "}
             <span style={{ color: corrida.cor }}>amarelo</span> no mapa.
           </p>
 
@@ -322,15 +323,15 @@ export default function PercursoPagina() {
             {[
               {
                 fase: "Ida",
-                km: "km 0 → 16,2",
-                distancia: "16,2 km",
+                km: "km 0 → 13,8",
+                distancia: "13,8 km",
                 cor: CATEGORIAS[0].cor,
                 texto:
-                  "Saída da Arena junto com o Cicloturismo. Na bifurcação do km 13,8 o Rachão desgarra e segue mais 2,4 km até o ponto de apoio.",
+                  "Saída da Arena junto com o Cicloturismo, pela mesma estrada, até o ponto de apoio na bifurcação. Sem pressa: a prova ainda não começou.",
               },
               {
                 fase: "A corrida",
-                km: "km 16,2 → 38,2",
+                km: "km 13,8 → 40,6",
                 distancia: corrida.extensao,
                 cor: corrida.cor,
                 texto:
@@ -339,11 +340,11 @@ export default function PercursoPagina() {
               },
               {
                 fase: "Volta",
-                km: "km 38,2 → 54,5",
-                distancia: "16,3 km",
+                km: "km 40,6 → 54,5",
+                distancia: "13,9 km",
                 cor: CATEGORIAS[0].cor,
                 texto:
-                  "Do apoio de volta à bifurcação e dali pelo mesmo caminho do Cicloturismo até o clube, onde os pedais terminam.",
+                  "Do apoio até o clube pelo caminho da ida, no ritmo de cada um. O cronômetro já parou — é só voltar e encerrar o pedal.",
               },
             ].map((fase) => (
               <li
@@ -375,8 +376,9 @@ export default function PercursoPagina() {
           </ol>
 
           <p className="mt-6 max-w-[62ch] text-sm text-neve-500">
-            O ponto de apoio é o mesmo lugar nas duas passagens — o GPX
-            confirma: os dois quilômetros caem a 12 m um do outro.
+            O ponto de apoio é o mesmo lugar nas três passagens do Rachão e na
+            única do Cicloturismo — no GPX, os quilômetros 13,8 e 40,6 caem a
+            11 m um do outro.
           </p>
         </section>
 
