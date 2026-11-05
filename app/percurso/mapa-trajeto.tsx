@@ -60,7 +60,7 @@ const GLIFOS: Record<string, string> = {
   /** Garrafa: é o que tem no ponto de apoio. */
   apoio:
     '<path d="M9 2h4v2.2l1.2 1.6a3 3 0 0 1 .6 1.8V20a2 2 0 0 1-2 2h-3.6a2 2 0 0 1-2-2V7.6a3 3 0 0 1 .6-1.8L9 4.2V2Z"/><rect x="7.2" y="10" width="7.6" height="3" fill="#03171a"/>',
-  /** Bandeirada, para o começo e o fim do trecho cronometrado. */
+  /** Bandeirada, para o começo e o fim do trecho disputado. */
   trecho:
     '<path d="M5 2v20h2v-8.4l11-4.2V2.6L7 6.8V2H5Z"/><rect x="9" y="4.6" width="3" height="3" fill="#03171a"/><rect x="15" y="2.6" width="3" height="3" fill="#03171a"/><rect x="12" y="8.6" width="3" height="3" fill="#03171a"/>',
 };

@@ -157,7 +157,7 @@ export function ExploradorPercurso({
     /*
      * Trecho com nome também aparece no perfil, não só no mapa.
      *
-     * O mapa mostra ONDE fica a parte cronometrada; aqui o ciclista vê o que
+     * O mapa mostra ONDE fica a parte disputada; aqui o ciclista vê o que
      * ela exige das pernas — e dá para comparar com o resto da prova sem
      * trocar de figura. A linha é redesenhada por cima, na cor do trecho.
      */
@@ -436,7 +436,7 @@ export function ExploradorPercurso({
               vectorEffect="non-scaling-stroke"
             />
 
-            {/* O pedaço cronometrado, redesenhado por cima na cor dele. */}
+            {/* O pedaço disputado, redesenhado por cima na cor dele. */}
             {faixas.map((faixa) => (
               <g key={`linha-${faixa.nome}`}>
                 {[faixa.x1, faixa.x2].map((px, n) => (

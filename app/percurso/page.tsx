@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: `Percurso · ${EVENTO.nome}`,
     description:
-      "Explore o trajeto ponto a ponto e baixe o GPX: Rachão 54,5 km, com 26,8 km de corrida cronometrada, e Cicloturismo 27,6 km.",
+      "Explore o trajeto ponto a ponto e baixe o GPX: Rachão 54,5 km, com 26,8 km de disputa, e Cicloturismo 27,6 km.",
     locale: "pt_BR",
     type: "website",
   },
@@ -215,8 +215,8 @@ export default function PercursoPagina() {
           <p className="mt-5 max-w-[62ch] text-lg text-neve-300">
             Os dois percursos saem juntos do estacionamento da Arena e andam
             lado a lado nos primeiros 13,8 km, até o ponto de apoio. Dali o
-            Cicloturismo retorna e o Rachão larga na parte cronometrada. No
-            fim, todo mundo volta pelo mesmo caminho, no seu ritmo.
+            Cicloturismo retorna e o Rachão larga na parte disputada. No fim,
+            todo mundo volta pelo mesmo caminho, no seu ritmo.
           </p>
 
           <div className="mt-9 grid gap-4 sm:grid-cols-2">
@@ -335,7 +335,7 @@ export default function PercursoPagina() {
                 distancia: corrida.extensao,
                 cor: corrida.cor,
                 texto:
-                  "O circuito cronometrado. Sai do ponto de apoio, dá a volta e chega de novo nele. É aqui que o troféu do 1º ao 5º é decidido.",
+                  "O pedaço que vale. Sai do ponto de apoio, dá a volta e chega de novo nele. Não há cronometragem: anota-se a ordem de chegada dos cinco primeiros, e é daí que saem os troféus.",
                 destaque: true,
               },
               {
@@ -344,7 +344,7 @@ export default function PercursoPagina() {
                 distancia: "13,9 km",
                 cor: CATEGORIAS[0].cor,
                 texto:
-                  "Do apoio até o clube pelo caminho da ida, no ritmo de cada um. O cronômetro já parou — é só voltar e encerrar o pedal.",
+                  "Do apoio até o clube pelo caminho da ida, no ritmo de cada um. A disputa já acabou — é só voltar e encerrar o pedal.",
               },
             ].map((fase) => (
               <li
@@ -376,7 +376,7 @@ export default function PercursoPagina() {
           </ol>
 
           <p className="mt-6 max-w-[62ch] text-sm text-neve-500">
-            O ponto de apoio é o mesmo lugar nas três passagens do Rachão e na
+            O ponto de apoio é o mesmo lugar nas duas passagens do Rachão e na
             única do Cicloturismo — no GPX, os quilômetros 13,8 e 40,6 caem a
             11 m um do outro.
           </p>

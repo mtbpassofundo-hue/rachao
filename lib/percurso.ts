@@ -47,7 +47,8 @@ export type IdPercurso = (typeof CATEGORIAS)[number]["id"];
  *
  * O ponto de apoio é a bifurcação: o mesmo km 13,8 nos dois percursos. Para o
  * Cicloturismo é o ponto de retorno, bem no meio da prova dele; para o
- * Rachão é onde a parte cronometrada começa e termina.
+ * Rachão é onde a parte disputada começa e termina. Não há cronometragem na
+ * prova: a organização anota a ordem de chegada dos cinco primeiros.
  *
  * Por que aqui e não 2,4 km adiante: a ida e a volta do Rachão usam a mesma
  * estrada do km 12 ao km 18 — qualquer ponto nesse pedaço fecha um laço. O
@@ -141,7 +142,7 @@ export const REFERENCIAS = [
     marca: "2",
     titulo: "Volta ao clube no seu ritmo",
     detalhe:
-      "Depois do apoio, os últimos 13,9 km são os mesmos para todo mundo, pelo caminho da ida. Sem cronômetro: é só voltar e encerrar o pedal.",
+      "Depois do apoio, os últimos 13,9 km são os mesmos para todo mundo, pelo caminho da ida. A disputa já terminou: é só voltar e encerrar o pedal.",
     gps: "-28.26930, -52.35553",
   },
 ] as const;

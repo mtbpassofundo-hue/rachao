@@ -100,7 +100,7 @@ export const CATEGORIAS = [
     publico: "Quem vem para competir",
     premiacao: "Troféu do 1º ao 5º lugar da geral",
     descricao:
-      "A prova de verdade, cronometrada e disputada do começo ao fim. Largada junto com todo mundo, estrada de chão, e quem chegar na frente sobe no pódio.",
+      "A disputa do dia, na estrada de chão. Não há cronometragem: a organização anota a ordem de chegada dos cinco primeiros, e é essa a classificação.",
   },
   {
     id: "cicloturismo",
@@ -109,7 +109,7 @@ export const CATEGORIAS = [
     publico: "Quem vem pedalar junto",
     premiacao: "Medalha de participação do desafio",
     descricao:
-      "Mesmo trajeto, sem cronômetro e sem disputa. Ritmo de passeio, para quem quer completar o percurso e voltar inteiro para o churrasco.",
+      "Trajeto mais curto e sem disputa nenhuma. Ritmo de passeio, para quem quer completar o percurso, conversar na estrada e voltar inteiro.",
   },
   {
     id: "pedal-kids",
