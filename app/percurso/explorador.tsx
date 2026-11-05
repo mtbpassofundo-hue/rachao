@@ -31,6 +31,79 @@ const G = { largura: 1000, altura: 300, esq: 80, dir: 16, topo: 24, base: 36 };
 const PLOT_L = G.largura - G.esq - G.dir;
 const PLOT_A = G.altura - G.topo - G.base;
 
+/**
+ * Uma leitura do ponto, para a faixa que flutua sobre o mapa.
+ *
+ * Ficava num quadro acima do mapa, e o ciclista tinha de olhar para cima a
+ * cada arraste. Dentro do mapa, o número está ao lado do lugar que ele
+ * descreve — e sobra a altura que os quatro quadros ocupavam.
+ */
+function Leitura({
+  rotulo,
+  valor,
+  nota,
+  mono,
+  mapa,
+}: {
+  rotulo: string;
+  valor: string;
+  nota: string;
+  mono?: boolean;
+  mapa?: string;
+}) {
+  return (
+    <div className="painel-mapa">
+      <dt className="rotulo flex items-center gap-1.5 text-[0.55rem] text-neve-300 sm:text-[0.58rem]">
+        {rotulo}
+        {mapa && (
+          <a
+            href={mapa}
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Abrir este ponto no Google Maps"
+            // O rótulo vai em aria-label, não em texto escondido: dentro de um
+            // painel com desfoque de fundo, o `sr-only` deixava um borrão
+            // cinza na tela.
+            aria-label="Abrir este ponto no Google Maps"
+            /* O painel inteiro ignora o ponteiro para não roubar o arraste do
+               mapa; só este link volta a aceitar clique. */
+            className="pointer-events-auto inline-flex items-center gap-1 text-limao transition hover:text-white"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="size-3"
+              aria-hidden="true"
+            >
+              <path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z" />
+              <circle cx="12" cy="10" r="2.6" />
+            </svg>
+            abrir
+          </a>
+        )}
+      </dt>
+      <dd
+        className={`mt-0.5 font-bold whitespace-nowrap text-white tabular-nums ${
+          mono ? "font-mono text-[0.72rem] sm:text-sm" : "text-sm sm:text-lg"
+        }`}
+      >
+        {valor}
+      </dd>
+      <dd
+        className={`text-[0.6rem] whitespace-nowrap text-neve-300 sm:text-[0.65rem] ${
+          mono ? "font-mono tabular-nums" : ""
+        }`}
+      >
+        {nota}
+      </dd>
+    </div>
+  );
+}
+
 /** Degraus de inclinação, do plano ao muro. Serve para nomear, não para colorir. */
 function nomeDaInclinacao(incl: number): string {
   const v = Math.abs(incl);
@@ -167,75 +240,6 @@ export function ExploradorPercurso({
         </div>
       </div>
 
-      {/* ─── Leitura do ponto ─────────────────────────────────────────── */}
-      <dl className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-        {[
-          { rotulo: "Distância", valor: `${formatarKm(atual * t.passo)} km`, nota: `de ${formatarKm(t.distanciaTotal)} km` },
-          { rotulo: "Altitude", valor: `${Math.round(t.ele[atual])} m`, nota: `entre ${t.altitudeMin} e ${t.altitudeMax} m` },
-          {
-            rotulo: "Inclinação",
-            valor: `${incl > 0 ? "+" : ""}${incl.toFixed(1).replace(".", ",")}%`,
-            nota: nomeDaInclinacao(incl),
-          },
-          {
-            rotulo: "Coordenadas",
-            valor: `${t.lat[atual].toFixed(5)}`,
-            nota: `${t.lon[atual].toFixed(5)}`,
-            mono: true,
-            // Abre o ponto exato no Google Maps. No celular, cai direto no
-            // aplicativo; o formato ?api=1&query= é o que o Google documenta
-            // para isso e não depende de conta logada.
-            mapa: `https://www.google.com/maps/search/?api=1&query=${t.lat[atual]},${t.lon[atual]}`,
-          },
-        ].map((tile) => (
-          <div
-            key={tile.rotulo}
-            className="rounded-xl border border-petroleo-800 bg-petroleo-950 px-4 py-3"
-          >
-            <dt className="rotulo flex items-center gap-2 text-[0.6rem] text-neve-500">
-              {tile.rotulo}
-              {tile.mapa && (
-                <a
-                  href={tile.mapa}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="Abrir este ponto no Google Maps"
-                  className="inline-flex items-center gap-1 text-limao transition hover:text-white"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="size-3"
-                    aria-hidden="true"
-                  >
-                    <path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z" />
-                    <circle cx="12" cy="10" r="2.6" />
-                  </svg>
-                  abrir
-                  <span className="sr-only">no Google Maps</span>
-                </a>
-              )}
-            </dt>
-            <dd
-              className={`mt-1 text-xl font-bold text-white tabular-nums ${
-                tile.mono ? "font-mono text-base" : ""
-              }`}
-            >
-              {tile.valor}
-            </dd>
-            <dd
-              className={`text-xs text-neve-500 ${tile.mono ? "font-mono tabular-nums" : ""}`}
-            >
-              {tile.nota}
-            </dd>
-          </div>
-        ))}
-      </dl>
-
       <div className="mt-6 grid gap-7">
         {/* ─── Mapa com as estradas ───────────────────────────────────── */}
         <figure className="min-w-0">
@@ -247,6 +251,39 @@ export function ExploradorPercurso({
             chaveCategoria={categoria.id}
             pontos={categoria.pontos}
             trechos={categoria.trechos}
+            topo={
+              <dl className="flex flex-wrap gap-2">
+                <Leitura
+                  rotulo="Distância"
+                  valor={`${formatarKm(atual * t.passo)} km`}
+                  nota={`de ${formatarKm(t.distanciaTotal)} km`}
+                />
+                <Leitura
+                  rotulo="Altitude"
+                  valor={`${Math.round(t.ele[atual])} m`}
+                  nota={`${t.altitudeMin}–${t.altitudeMax} m`}
+                />
+              </dl>
+            }
+            base={
+              <dl className="flex flex-wrap gap-2">
+                <Leitura
+                  rotulo="Inclinação"
+                  valor={`${incl > 0 ? "+" : ""}${incl.toFixed(1).replace(".", ",")}%`}
+                  nota={nomeDaInclinacao(incl)}
+                />
+                <Leitura
+                  rotulo="Coordenadas"
+                  valor={t.lat[atual].toFixed(5)}
+                  nota={t.lon[atual].toFixed(5)}
+                  mono
+                  // Abre o ponto exato no Google Maps. No celular, cai direto
+                  // no aplicativo; o formato ?api=1&query= é o que o Google
+                  // documenta para isso e não depende de conta logada.
+                  mapa={`https://www.google.com/maps/search/?api=1&query=${t.lat[atual]},${t.lon[atual]}`}
+                />
+              </dl>
+            }
           />
 
           <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-neve-300">

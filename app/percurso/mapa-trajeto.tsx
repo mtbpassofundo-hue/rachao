@@ -47,6 +47,10 @@ type Props = {
   chaveCategoria: string;
   pontos: PontoNoMapa[];
   trechos: TrechoNoMapa[];
+  /** Faixa que flutua sobre o topo do mapa. */
+  topo?: React.ReactNode;
+  /** Faixa que flutua sobre a base, acima da atribuição do OpenStreetMap. */
+  base?: React.ReactNode;
 };
 
 /* ─── Símbolos dos pontos de apoio ────────────────────────────────────────
@@ -169,6 +173,8 @@ export function MapaTrajeto({
   chaveCategoria,
   pontos,
   trechos,
+  topo,
+  base,
 }: Props) {
   const caixa = useRef<HTMLDivElement>(null);
   const mapa = useRef<MapaLeaflet | null>(null);
@@ -449,13 +455,37 @@ export function MapaTrajeto({
   }, [atual, lat, lon]);
 
   return (
-    <div
-      ref={caixa}
-      /* O percurso é quase quadrado: numa caixa larga e baixa ele ficava
-         miúdo no meio, com os dois lados vazios. */
-      className="mx-auto h-[360px] w-full max-w-[760px] rounded-xl border border-petroleo-700 bg-petroleo-950 sm:h-[480px] lg:h-[560px]"
-      role="application"
-      aria-label="Mapa do percurso com as estradas e localidades. Arraste o gráfico de altimetria para mover o ponto no mapa."
-    />
+    /* O percurso é quase quadrado: numa caixa larga e baixa ele ficava
+       miúdo no meio, com os dois lados vazios. */
+    <div className="relative mx-auto h-[360px] w-full max-w-[760px] sm:h-[480px] lg:h-[560px]">
+      <div
+        ref={caixa}
+        className="absolute inset-0 rounded-xl border border-petroleo-700 bg-petroleo-950"
+        role="application"
+        aria-label="Mapa do percurso com as estradas e localidades. Arraste o gráfico de altimetria para mover o ponto no mapa."
+      />
+
+      {/*
+       * As leituras flutuam sobre o mapa, não acima dele.
+       *
+       * z-[1000] passa por cima dos painéis do Leaflet, que param em 800. O
+       * ponteiro atravessa: sem isso, arrastar o mapa onde há faixa não
+       * funcionaria — só o link do Google Maps volta a aceitar clique.
+       *
+       * A faixa de cima começa depois do controle de zoom, que mora no canto
+       * esquerdo; a de baixo para antes da atribuição do OpenStreetMap, que é
+       * obrigatória e não pode ficar escondida.
+       */}
+      {topo && (
+        <div className="pointer-events-none absolute top-2.5 right-2.5 left-14 z-[1000]">
+          {topo}
+        </div>
+      )}
+      {base && (
+        <div className="pointer-events-none absolute right-2.5 bottom-7 left-2.5 z-[1000]">
+          {base}
+        </div>
+      )}
+    </div>
   );
 }

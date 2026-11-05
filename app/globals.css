@@ -304,6 +304,26 @@ body {
   font-size: 11px;
 }
 
+/* ─── Leituras sobre o mapa ───────────────────────────────────────────────
+   Distância e altitude no topo, inclinação e coordenadas na base, por cima
+   do mapa. Fundo a 50% para o traçado continuar visível por baixo, com um
+   leve desfoque: sem ele, o número some quando passa sobre estrada clara. */
+.painel-mapa {
+  border-radius: 0.6rem;
+  border: 1px solid rgb(173 196 189 / 0.18);
+  background: rgb(3 23 26 / 0.5);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  padding: 0.28rem 0.5rem;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.35);
+}
+
+@media (min-width: 640px) {
+  .painel-mapa {
+    padding: 0.5rem 0.8rem;
+  }
+}
+
 /* ─── Formulário ──────────────────────────────────────────────────────────── */
 .campo {
   width: 100%;
