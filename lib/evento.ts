@@ -23,7 +23,7 @@ export const EVENTO = {
   cidade: "Passo Fundo",
   estado: "RS",
   percurso:
-    "Saída do estacionamento da Arena, estrada de chão e retorno ao estacionamento da Arena.",
+    "Saída do estacionamento da Arena, na Sede Campestre, estrada de chão e retorno ao estacionamento da Arena.",
 
   /** O que substitui a taxa de inscrição. */
   custo: "1 brinquedo",
@@ -38,8 +38,17 @@ export const EVENTO = {
   /** Só dígitos, com 55 na frente — é o formato que o wa.me exige. */
   whatsapp: "5554991809050",
 
-  /** Endereço público, usado na miniatura que o WhatsApp mostra. */
-  site: "https://rachao.vercel.app",
+  /**
+   * Endereço público, usado na miniatura que o WhatsApp mostra e impresso no
+   * flyer.
+   *
+   * Não é "rachao.vercel.app" porque esse nome já é de outra pessoa na
+   * Vercel — conferido em 04/11/2026. Mudou de endereço? Mude aqui, e rode
+   * `npm run flyer` para a peça sair com o novo.
+   */
+  site: "https://rachaobike.vercel.app",
+  /** O mesmo endereço sem o https, que é como ele aparece no flyer. */
+  siteCurto: "rachaobike.vercel.app",
 } as const;
 
 /**

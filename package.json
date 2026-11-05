@@ -12,7 +12,7 @@
     "start": "next start",
     "lint": "eslint",
     "type-check": "tsc --noEmit",
-    "flyer": "node scripts/flyer/gerar.mjs"
+    "flyer": "node --experimental-strip-types scripts/flyer/gerar.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.110.7",
