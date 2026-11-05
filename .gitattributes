@@ -1,0 +1,4 @@
+# GPX é dado, não código: tem que chegar no servidor byte a byte igual ao que
+# saiu do Strava. Sem isto, o core.autocrlf=true do Windows trocaria as quebras
+# de linha num clone novo e o arquivo serviria diferente do original.
+*.gpx binary

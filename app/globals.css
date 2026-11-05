@@ -130,6 +130,180 @@ body {
   }
 }
 
+/* ─── Gráfico de altimetria ───────────────────────────────────────────────
+   O texto dentro de um SVG com viewBox encolhe junto com o desenho. No
+   celular o gráfico cai para ~330 px e uma fonte de 13 unidades viraria 4 px
+   na tela. Por isso o tamanho é declarado em unidades do viewBox e aumentado
+   na tela pequena — e metade das marcas de distância some, senão elas se
+   encavalam. */
+.eixo {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  fill: var(--color-neve-500);
+}
+
+.eixo-nota {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  fill: var(--color-neve-300);
+}
+
+@media (max-width: 640px) {
+  .eixo {
+    font-size: 34px;
+  }
+  .eixo-nota {
+    font-size: 30px;
+  }
+  .eixo-alternada {
+    display: none;
+  }
+}
+
+/* ─── Pontos de apoio no mapa ─────────────────────────────────────────────
+   O mapa do OpenStreetMap é claro, então o selo é escuro com o símbolo em
+   branco: lido por cima de estrada, mata ou lavoura sem sumir. A cor fica só
+   no anel, e nunca é a mesma das categorias, para não confundir percurso com
+   ponto de apoio. */
+/* O lugar exato é o pontinho; o selo fica FORA do traçado, ligado a ele por
+   uma haste. Símbolo em cima da linha da prova tapava justamente o cruzamento
+   que o ciclista queria olhar. O deslocamento é em pixels, então a haste não
+   cresce quando o mapa aproxima. */
+.pin {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Metade do lado do SVG, que tem o zero do viewBox no centro: é isto que põe
+   o começo da haste em cima do lugar exato. Mexeu num, mexe no outro. */
+.pin-haste {
+  position: absolute;
+  left: -200px;
+  top: -200px;
+  pointer-events: none; /* a haste não rouba o clique do mapa */
+}
+
+.pin-selo {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  /* O left/top inline marca o fim da haste; a margem centra o selo nele. */
+  margin: -20px 0 0 -20px;
+  border-radius: 50%;
+  background: #03171a;
+  border: 3px solid var(--b);
+  filter: drop-shadow(0 2px 5px rgb(0 0 0 / 0.5));
+}
+
+.pin-selo svg {
+  width: 23px;
+  height: 23px;
+  fill: #fff;
+}
+
+/* O número põe os pontos de apoio em ordem de prova sem gastar texto. */
+.pin-num {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  display: grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 9px;
+  background: var(--b);
+  color: #03171a;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.pin-rotulo,
+.pin-texto {
+  position: absolute;
+  white-space: nowrap;
+  border-radius: 6px;
+  background: #03171a;
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  filter: drop-shadow(0 2px 5px rgb(0 0 0 / 0.5));
+}
+
+/* Mapa estreito, selo menor: ver em cima de qual estrada ele está vale mais
+   que o tamanho do desenho. */
+.selos-miudos .pin-selo {
+  width: 32px;
+  height: 32px;
+  margin: -16px 0 0 -16px;
+  border-width: 2.5px;
+}
+
+.selos-miudos .pin-selo svg {
+  width: 19px;
+  height: 19px;
+}
+
+.selos-miudos .pin-num {
+  top: -6px;
+  right: -6px;
+  min-width: 15px;
+  height: 15px;
+  padding: 0 3px;
+  font-size: 10px;
+}
+
+/* Os nomes encolhem junto com os selos, senão uma etiqueta sozinha atravessa
+   meio mapa de celular. */
+.selos-miudos .pin-rotulo,
+.selos-miudos .pin-texto {
+  font-size: 9px;
+  padding: 2px 5px;
+}
+
+.pin-rotulo {
+  transform: translateX(-50%);
+  border: 1px solid var(--b);
+  padding: 2px 6px;
+  font-size: 11px;
+}
+
+/* Só no mapa miúdo do celular os nomes esperam o zoom: lá o percurso inteiro
+   cabe em dois palmos e quatro etiquetas tapam a estrada. Os símbolos, esses,
+   aparecem sempre — todos, como na imagem do percurso. */
+.selos-miudos .pin-rotulo {
+  display: none;
+}
+
+.selos-miudos.com-nomes .pin-rotulo {
+  display: block;
+}
+
+/* Nome acima do selo: a âncora passa a ser a base da etiqueta. */
+.pin-rotulo-cima {
+  transform: translate(-50%, -100%);
+}
+
+/* Marco de referência: só o nome, sem símbolo, porque o lugar já é
+   conhecido de quem pedala por aqui. O fundo meio transparente deixa ver a
+   estrada por baixo. */
+.pin-texto {
+  transform: translate(-50%, -50%);
+  border: 1px solid var(--b);
+  background: rgb(3 23 26 / 0.55);
+  padding: 2px 6px;
+  font-size: 11px;
+}
+
 /* ─── Formulário ──────────────────────────────────────────────────────────── */
 .campo {
   width: 100%;

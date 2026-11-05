@@ -14,6 +14,7 @@ import {
 const LINKS = [
   { href: "#causa", texto: "A causa" },
   { href: "#modalidades", texto: "Modalidades" },
+  { href: "/percurso", texto: "Percurso" },
   { href: "#coleta", texto: "Pontos de coleta" },
   { href: "/inscritos", texto: "Inscritos" },
 ];
@@ -59,15 +60,27 @@ export default function Pagina() {
           </a>
 
           <nav className="hidden items-center gap-7 lg:flex">
-            {LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="rotulo text-[0.7rem] text-neve-300 transition hover:text-white"
-              >
-                {link.texto}
-              </a>
-            ))}
+            {LINKS.map((link) =>
+              link.href.startsWith("#") ? (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="rotulo text-[0.7rem] text-neve-300 transition hover:text-white"
+                >
+                  {link.texto}
+                </a>
+              ) : (
+                // Página de verdade, não âncora: com Link a troca é na hora,
+                // sem recarregar o site inteiro.
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="rotulo text-[0.7rem] text-neve-300 transition hover:text-white"
+                >
+                  {link.texto}
+                </Link>
+              ),
+            )}
           </nav>
 
           <a
@@ -319,6 +332,21 @@ export default function Pagina() {
               o termo de autorização no próprio formulário. Vale para o Pedal
               Kids e para qualquer menor nas outras modalidades.
             </p>
+
+            <div className="mt-6 flex flex-col items-start gap-4 rounded-2xl border border-petroleo-700 bg-petroleo-950/60 p-6 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-neve-300">
+                <strong className="text-white">Onde a prova passa.</strong>{" "}
+                Mapa das estradas, altimetria quilômetro a quilômetro e o GPX
+                para o seu ciclocomputador — Rachão 54,5 km, com 21,92 km
+                cronometrados, e Cicloturismo 27,6 km.
+              </p>
+              <Link
+                href="/percurso"
+                className="inline-flex shrink-0 items-center gap-2 rounded-xl border border-white/20 px-6 py-3.5 font-semibold text-white transition hover:border-limao hover:text-limao"
+              >
+                Ver o percurso
+              </Link>
+            </div>
           </div>
         </section>
 
