@@ -46,34 +46,62 @@
       /* Fundo: o impresso de 2025 tinha foto do pelotão. Sem a foto em alta,
          o lugar dela é ocupado por um degradê fundo com a mesma textura
          diagonal do site — some na impressão, aparece na tela. */
+      .foto,
       .fundo,
       .trama,
       .brilho {
         position: absolute;
         inset: 0;
+      }
+
+      /* A foto do pelotão por baixo de tudo, como no impresso de 2025. O
+         recorte já vem em 1080x1350 de scripts/fotos.mjs: deixar o navegador
+         cortar uma paisagem aqui jogaria os rostos para fora do quadro. */
+      .foto {
+        z-index: -4;
+        background-image: url('fotos/pelotao-retrato.jpg');
+        background-size: cover;
+        background-position: center 42%;
+      }
+
+      .fundo {
+        z-index: -3;
+      }
+
+      .trama {
+        z-index: -2;
+      }
+
+      .brilho {
         z-index: -1;
       }
 
+      /* Véu por cima da foto. Sem ele, texto branco sobre grama ensolarada e
+         camisa laranja não se lê. Mais fechado em cima e embaixo, onde ficam
+         as marcas e o endereço do site; mais aberto no meio, onde as caixas
+         escuras já fazem o contraste e a foto pode respirar. */
       .fundo {
         background:
           radial-gradient(
             120% 80% at 80% 0%,
-            rgba(149, 244, 62, 0.16),
+            rgba(149, 244, 62, 0.14),
             transparent 60%
           ),
-          radial-gradient(
-            100% 70% at 0% 100%,
-            rgba(26, 107, 97, 0.55),
-            transparent 65%
-          ),
-          linear-gradient(170deg, #06252a 0%, #03171a 55%, #052226 100%);
+          linear-gradient(
+            180deg,
+            rgba(3, 23, 26, 0.88) 0%,
+            rgba(3, 23, 26, 0.62) 20%,
+            rgba(3, 23, 26, 0.5) 52%,
+            rgba(3, 23, 26, 0.74) 84%,
+            rgba(3, 23, 26, 0.92) 100%
+          );
       }
 
       .trama {
         background-image: repeating-linear-gradient(
           115deg,
           transparent 0 22px,
-          rgba(149, 244, 62, 0.05) 22px 25px
+          rgba(149, 244, 62, 0.025) 22px 25px
         );
       }
 
@@ -360,6 +388,7 @@
   </head>
   <body>
     <div class="peca">
+      <div class="foto"></div>
       <div class="fundo"></div>
       <div class="trama"></div>
       <div class="brilho"></div>

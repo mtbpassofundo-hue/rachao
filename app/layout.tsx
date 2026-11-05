@@ -6,8 +6,8 @@ import "./globals.css";
 const DESCRICAO = `A inscrição do ${EVENTO.nome} custa um brinquedo. Entregue em um dos quatro pontos de coleta até ${EVENTO.prazoBrinquedoCurto} e pedale no dia ${EVENTO.dataCurta}, na ${EVENTO.sede}, em ${EVENTO.cidade}.`;
 
 /**
- * Endereço público do site — é o que transforma "/flyer.jpg" na URL absoluta
- * que o WhatsApp precisa para mostrar a miniatura.
+ * Endereço público do site — é o que transforma "/fotos/largada-og.jpg" na
+ * URL absoluta que o WhatsApp precisa para mostrar a miniatura.
  *
  * NEXT_PUBLIC_SITE_URL existe para o dia em que o clube quiser domínio
  * próprio: basta cadastrar a variável na Vercel, sem tocar no código.
@@ -27,8 +27,21 @@ export const metadata: Metadata = {
     description: DESCRICAO,
     locale: "pt_BR",
     type: "website",
+    /*
+     * A foto, e não o flyer, é a miniatura que o WhatsApp mostra.
+     *
+     * O flyer é um retrato cheio de texto miúdo; recortado no quadro que o
+     * WhatsApp usa, vira uma tarja verde ilegível. A foto já está cortada em
+     * 1200x630, a proporção que esses aplicativos esperam, e diz num relance
+     * do que se trata.
+     */
     images: [
-      { url: "/flyer.jpg", width: 1080, height: 1350, alt: EVENTO.nome },
+      {
+        url: "/fotos/largada-og.jpg",
+        width: 1200,
+        height: 630,
+        alt: `Ciclistas e uma criança na largada do ${EVENTO.nome}`,
+      },
     ],
   },
 };

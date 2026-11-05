@@ -57,6 +57,18 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+
+      // Mesma história do GPX: no celular, o atributo `download` do link não
+      // basta e o flyer abriria na tela em vez de ir para a galeria.
+      {
+        source: "/flyer.jpg",
+        headers: [
+          {
+            key: "Content-Disposition",
+            value: 'attachment; filename="rachao-bike-2026.jpg"',
+          },
+        ],
+      },
     ];
   },
 };

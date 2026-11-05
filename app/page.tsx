@@ -105,7 +105,7 @@ export default function Pagina() {
             className="absolute -bottom-56 -left-48 -z-10 h-[34rem] w-[34rem] rounded-full bg-petroleo-600/35 blur-3xl"
           />
 
-          <div className="mx-auto grid max-w-6xl items-center gap-14 px-5 lg:grid-cols-[1.15fr_0.85fr]">
+          <div className="mx-auto grid max-w-6xl items-center gap-14 px-5 lg:grid-cols-[1fr_1.05fr]">
             <div className="min-w-0">
               <p className="rotulo inline-flex items-center gap-2.5 rounded-full border border-limao/40 bg-limao/10 px-4 py-2 text-[0.7rem] text-limao">
                 <span className="size-1.5 rounded-full bg-limao" />
@@ -174,20 +174,39 @@ export default function Pagina() {
               </p>
             </div>
 
-            <div className="relative mx-auto w-full max-w-sm min-w-0 lg:max-w-none">
+            {/* No celular a foto vem antes do título: quase todo mundo chega
+                por um link no WhatsApp, e a imagem diz do que se trata antes
+                de a pessoa ler qualquer coisa. No computador ela volta para a
+                direita, ao lado do texto. */}
+            <div className="relative mx-auto -order-1 w-full min-w-0 lg:order-none">
               <div
                 aria-hidden="true"
                 className="absolute -inset-4 -z-10 rotate-2 rounded-3xl bg-gradient-to-br from-limao/30 via-petroleo-600/30 to-transparent blur-lg"
               />
+              {/* A foto do ano passado é a capa do evento: adulto e criança no
+                  mesmo quadro, que é o que o Rachão é. O flyer continua logo
+                  abaixo, para quem quer a peça com todas as informações. */}
               <Image
-                src="/flyer.jpg"
-                alt={`Flyer do ${EVENTO.nome}`}
-                width={1080}
-                height={1350}
+                src="/fotos/largada.jpg"
+                alt="Ciclistas e uma criança com suas bikes sob o pórtico de chegada, antes da largada do Rachão Bike"
+                width={1600}
+                height={1067}
                 priority
-                sizes="(max-width: 1024px) 90vw, 420px"
+                sizes="(max-width: 1024px) 92vw, 520px"
                 className="w-full rounded-2xl border border-white/10 shadow-2xl shadow-black/60"
               />
+              <p className="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-xs text-neve-500">
+                {/* Sem datar a foto: ela veio do acervo da organização e eu
+                    não sei de qual edição é. */}
+                <span>Na largada, as três provas saem do mesmo lugar</span>
+                <a
+                  href="/flyer.jpg"
+                  download
+                  className="font-semibold text-limao transition hover:text-limao-claro"
+                >
+                  Baixar o flyer
+                </a>
+              </p>
             </div>
           </div>
         </section>
@@ -284,6 +303,21 @@ export default function Pagina() {
                 {CONTATO_PRINCIPAL.nome.split(" ")[0]}{" "}
                 no WhatsApp antes de comprar.
               </p>
+
+              <figure className="mt-7">
+                <Image
+                  src="/fotos/pelotao.jpg"
+                  alt="Pelotão de ciclistas reunido na grama antes da largada"
+                  width={1600}
+                  height={1067}
+                  sizes="(max-width: 1024px) 92vw, 460px"
+                  className="w-full rounded-2xl border border-white/10"
+                />
+                <figcaption className="mt-2 text-xs text-neve-500">
+                  A concentração, antes de soltar. Este ano, cada bike dessas
+                  chega com um brinquedo já entregue.
+                </figcaption>
+              </figure>
             </div>
           </div>
         </section>
