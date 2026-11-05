@@ -28,3 +28,6 @@ next-env.d.ts
 /scripts/teste.xlsx
 /scripts/conferencia.png
 /scripts/relatorio-teste.xlsx
+
+.vercel
+.env*
