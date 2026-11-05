@@ -35,15 +35,15 @@ export default function Pagina() {
     <>
       {/* ─── Cabeçalho ───────────────────────────────────────────────────── */}
       <header className="fixed inset-x-0 top-0 z-50 border-b border-limao/15 bg-petroleo-950/90 backdrop-blur-md">
-        <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-4 px-5">
-          <a href="#topo" className="flex items-center gap-4">
+        <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-3 px-4 sm:gap-4 sm:px-5">
+          <a href="#topo" className="flex shrink-0 items-center gap-4">
             <Image
               src="/logo-comercial.png"
               alt="Clube Comercial"
               width={326}
               height={80}
               priority
-              className="h-9 w-auto sm:h-10"
+              className="h-8 w-auto shrink-0 sm:h-10"
             />
             <span className="hidden h-8 w-px bg-white/15 sm:block" />
             <Image
@@ -52,7 +52,7 @@ export default function Pagina() {
               width={569}
               height={406}
               priority
-              className="hidden h-9 w-auto sm:block"
+              className="hidden h-9 w-auto shrink-0 sm:block"
             />
             <span className="sr-only">
               {EVENTO.nome} — {EVENTO.promocao} com apoio do {EVENTO.apoio}
@@ -83,12 +83,23 @@ export default function Pagina() {
             )}
           </nav>
 
-          <a
-            href="#inscricao"
-            className="rotulo shrink-0 rounded-lg bg-limao px-4 py-3 text-xs text-petroleo-950 transition hover:bg-limao-claro sm:px-5"
-          >
-            Inscrever
-          </a>
+          <div className="flex shrink-0 items-center gap-3 sm:gap-4">
+            {/* O percurso precisa de porta no topo também no celular: lá o
+                menu some inteiro, e o único acesso ficava a quatro telas de
+                rolagem. Some a partir do lg, onde o menu já traz o link. */}
+            <Link
+              href="/percurso"
+              className="rotulo text-[0.65rem] whitespace-nowrap text-neve-300 transition hover:text-white sm:text-[0.7rem] lg:hidden"
+            >
+              Percurso
+            </Link>
+            <a
+              href="#inscricao"
+              className="rotulo shrink-0 rounded-lg bg-limao px-3 py-3 text-xs text-petroleo-950 transition hover:bg-limao-claro sm:px-5"
+            >
+              Inscrever
+            </a>
+          </div>
         </div>
       </header>
 

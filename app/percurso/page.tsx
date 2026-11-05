@@ -25,8 +25,10 @@ export const metadata: Metadata = {
   },
 };
 
+// "Mapa" e não "Percurso": dentro da página do percurso, um link com o nome
+// da própria página faz esperar o topo e entregar o meio dela.
 const LINKS = [
-  { href: "#percurso", texto: "Percurso" },
+  { href: "#percurso", texto: "Mapa" },
   { href: "#corrida", texto: "A corrida" },
   { href: "#gpx", texto: "GPX" },
 ];
@@ -119,15 +121,18 @@ export default function PercursoPagina() {
     <>
       {/* ─── Cabeçalho ───────────────────────────────────────────────────── */}
       <header className="sticky top-0 z-50 border-b border-limao/15 bg-petroleo-950/90 backdrop-blur-md">
-        <div className="mx-auto flex h-20 max-w-5xl items-center justify-between gap-4 px-5">
-          <Link href="/" className="flex items-center gap-4">
+        <div className="mx-auto flex h-20 max-w-5xl items-center justify-between gap-3 px-5">
+          {/* shrink-0 na logo: sem ele o flex espremia a assinatura do Clube
+              para caber os âncoras, e no celular ela aparecia achatada, com
+              as letras coladas. */}
+          <Link href="/" className="flex shrink-0 items-center gap-4">
             <Image
               src="/logo-comercial.png"
               alt="Clube Comercial"
               width={326}
               height={80}
               priority
-              className="h-9 w-auto"
+              className="h-9 w-auto shrink-0"
             />
             <span className="hidden h-8 w-px bg-white/15 sm:block" />
             <Image
@@ -135,23 +140,27 @@ export default function PercursoPagina() {
               alt="Rachão da Noite"
               width={569}
               height={406}
-              className="hidden h-9 w-auto sm:block"
+              className="hidden h-9 w-auto shrink-0 sm:block"
             />
           </Link>
 
-          <nav className="flex items-center gap-3.5 sm:gap-7">
+          <nav className="flex items-center gap-3.5 sm:gap-6">
+            {/* Os âncoras internos só a partir do tablet. No celular eles
+                disputavam espaço com a logo e, espremidos, faziam o dedo
+                errar o alvo — quem mirava "Percurso" caía no GPX, e a
+                página abria no meio. */}
             {LINKS.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="rotulo text-[0.7rem] whitespace-nowrap text-neve-300 transition hover:text-white"
+                className="rotulo hidden text-[0.7rem] whitespace-nowrap text-neve-300 transition hover:text-white sm:inline"
               >
                 {link.texto}
               </a>
             ))}
             <Link
               href="/#inscricao"
-              className="rotulo shrink-0 rounded-lg bg-limao px-3 py-2 text-[0.7rem] text-petroleo-950 transition hover:bg-limao-claro"
+              className="rotulo shrink-0 rounded-lg bg-limao px-3.5 py-2.5 text-[0.7rem] text-petroleo-950 transition hover:bg-limao-claro"
             >
               Inscrever
             </Link>
@@ -479,6 +488,14 @@ export default function PercursoPagina() {
           <span>
             Organização {EVENTO.promocao} · {EVENTO.cidade}/{EVENTO.estado}
           </span>
+          {/* Fecha o ciclo: quem rolou a página inteira do percurso volta
+              para a inscrição sem ter de subir até a barra do topo. */}
+          <Link
+            href="/"
+            className="font-semibold text-white transition hover:text-limao"
+          >
+            Página da inscrição
+          </Link>
           {CONTATOS.map((contato) => (
             <a
               key={contato.whatsapp}
