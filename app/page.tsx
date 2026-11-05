@@ -8,6 +8,7 @@ import {
   CONTATOS,
   CONTATO_PRINCIPAL,
   EVENTO,
+  GRUPO,
   PONTOS_COLETA,
 } from "@/lib/evento";
 
@@ -491,29 +492,58 @@ export default function Pagina() {
             </div>
 
             <div className="rounded-3xl border border-petroleo-700 bg-petroleo-900/50 p-7 sm:p-9">
-              <p className="rotulo text-xs text-limao">Mais informações</p>
-              <p className="mt-3 text-neve-300">
-                Dúvida sobre percurso, brinquedo ou inscrição? Chame um dos
-                dois no WhatsApp.
-              </p>
+              <p className="rotulo text-xs text-limao">Tire suas dúvidas</p>
 
-              <ul className="mt-7 space-y-5">
-                {CONTATOS.map((contato) => (
-                  <li key={contato.whatsapp}>
-                    <p className="titulo text-2xl text-white">{contato.nome}</p>
-                    <p className="mt-1 text-sm text-neve-300">{contato.papel}</p>
-                    <a
-                      href={`https://wa.me/${contato.whatsapp}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-3 inline-flex items-center gap-2.5 rounded-xl bg-limao px-5 py-3 font-bold text-petroleo-950 transition hover:bg-limao-claro"
-                    >
-                      <IconeWhatsapp className="size-5" />
-                      {contato.telefone}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+              {/* O grupo vem primeiro e com o botão grande de propósito: lá os
+                  próprios ciclistas respondem, e uma pergunta serve para os
+                  outros vinte que iam perguntar o mesmo. Os telefones ficam
+                  logo abaixo, para quem precisa falar direto. */}
+              <p className="titulo mt-4 text-3xl text-white">
+                Entre no grupo do ciclismo
+              </p>
+              <p className="mt-3 text-neve-300">
+                É o melhor lugar para perguntar sobre percurso, brinquedo ou
+                inscrição — a turma toda está lá e costuma responder antes da
+                organização.
+              </p>
+              <a
+                href={GRUPO.convite}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-5 inline-flex items-center gap-2.5 rounded-xl bg-limao px-6 py-3.5 font-bold text-petroleo-950 transition hover:bg-limao-claro"
+              >
+                <IconeWhatsapp className="size-5" />
+                {GRUPO.nome}
+              </a>
+
+              <div className="mt-8 border-t border-white/10 pt-7">
+                <p className="rotulo text-[0.65rem] text-neve-500">
+                  Ou fale direto com a organização
+                </p>
+                <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+                  {CONTATOS.map((contato) => (
+                    <li key={contato.whatsapp}>
+                      <a
+                        href={`https://wa.me/${contato.whatsapp}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex h-full flex-col rounded-xl border border-petroleo-700 bg-petroleo-950/50 px-4 py-3 transition hover:border-limao"
+                      >
+                        <span className="font-bold text-white">
+                          {contato.nome}
+                        </span>
+                        <span className="mt-0.5 text-xs text-neve-500">
+                          {contato.papel}
+                        </span>
+                        <span className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-limao">
+                          <IconeWhatsapp className="size-4" />
+                          {contato.telefone}
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
               <div className="mt-9 border-t border-white/10 pt-7">
                 <p className="rotulo text-[0.65rem] text-neve-500">
@@ -560,6 +590,15 @@ export default function Pagina() {
           </div>
 
           <div className="flex flex-col items-start gap-3 sm:items-end">
+            <a
+              href={GRUPO.convite}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-bold text-limao transition hover:text-limao-claro"
+            >
+              <IconeWhatsapp className="size-4" />
+              Grupo {GRUPO.nome}
+            </a>
             <Link
               href="/inscritos"
               className="text-sm font-bold text-limao transition hover:text-limao-claro"

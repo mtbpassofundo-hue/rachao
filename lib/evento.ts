@@ -46,6 +46,21 @@ export const EVENTO = {
 } as const;
 
 /**
+ * Grupo de WhatsApp do ciclismo do Clube.
+ *
+ * É a primeira porta para dúvida, antes do telefone de qualquer um: lá os
+ * próprios ciclistas respondem, e a pergunta de um serve para os outros vinte
+ * que iam perguntar o mesmo.
+ *
+ * O convite vem do aplicativo com "?mode=hqrc" pendurado, que é rastreio de
+ * QR code. Sai: o link funciona igual sem ele e fica mais fácil de ditar.
+ */
+export const GRUPO = {
+  nome: "Ciclismo Clube Comercial",
+  convite: "https://chat.whatsapp.com/Jsvx2abvum1HrhtgyBYgQZ",
+} as const;
+
+/**
  * Quem responde dúvida, na ordem em que aparece.
  *
  * O primeiro é o contato principal: é o nome que vai sozinho onde só cabe um,

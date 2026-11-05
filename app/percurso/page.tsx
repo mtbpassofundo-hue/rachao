@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { IconeWhatsapp } from "@/app/componentes/icone-whatsapp";
 import { ExploradorPercurso } from "@/app/percurso/explorador";
-import { CONTATOS, EVENTO } from "@/lib/evento";
+import { CONTATOS, EVENTO, GRUPO } from "@/lib/evento";
 import { direcaoDeFuga, lerTracado, ondeNoTracado } from "@/lib/gpx";
 import {
   CATEGORIAS,
@@ -488,6 +488,15 @@ export default function PercursoPagina() {
           <span>
             Organização {EVENTO.promocao} · {EVENTO.cidade}/{EVENTO.estado}
           </span>
+          <a
+            href={GRUPO.convite}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 font-semibold text-limao transition hover:text-limao-claro"
+          >
+            <IconeWhatsapp className="size-4" />
+            Grupo do ciclismo
+          </a>
           {/* Fecha o ciclo: quem rolou a página inteira do percurso volta
               para a inscrição sem ter de subir até a barra do topo. */}
           <Link
