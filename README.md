@@ -1,5 +1,7 @@
 # Rachão Bike 2026 — inscrição
 
+**No ar: <https://rachaobike.vercel.app>** · guia do dia a dia em [OPERACAO.md](OPERACAO.md)
+
 Site de inscrição do **Rachão Bike 2026**, promovido pelo Clube Comercial com
 apoio do Rachão da Noite (RDN). A inscrição não custa dinheiro: custa um
 brinquedo, entregue em um dos quatro pontos de coleta até **26/11/2026** e
