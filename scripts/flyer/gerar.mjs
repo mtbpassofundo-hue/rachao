@@ -18,7 +18,9 @@ import { extname, join } from "node:path";
 const exigir = createRequire("file:///C:/Users/Yuri/MTBPF/package.json");
 const puppeteer = exigir("puppeteer-core");
 
-const { CATEGORIAS, EVENTO, PONTOS_COLETA } = await import("../../lib/evento.ts");
+const { CATEGORIAS, CONTATOS, EVENTO, PONTOS_COLETA } = await import(
+  "../../lib/evento.ts"
+);
 
 const RAIZ = "C:/Users/Yuri/RACHAO";
 const PECA = join(RAIZ, "scripts/flyer");
@@ -41,14 +43,12 @@ const TEXTOS = {
     `doado a crianças carentes.`,
   prazo: `Brinquedo entregue até ${EVENTO.prazoBrinquedoCurto.slice(0, 5)} — sem ele, sem largada`,
   site: EVENTO.siteCurto,
-  coordenador: EVENTO.coordenador,
-  telefone: EVENTO.telefone,
-  cargo: EVENTO.cargo,
 };
 
 const LISTAS = {
   pontos: PONTOS_COLETA.map((p, i) => ({ numero: i + 1, nome: p.nome })),
   categorias: CATEGORIAS.map((c) => ({ nome: c.nome, premiacao: c.premiacao })),
+  contatos: CONTATOS.map((c) => ({ nome: c.nome, telefone: c.telefone })),
 };
 
 const TIPOS = {
@@ -114,6 +114,21 @@ const semValor = await pagina.evaluate(
       caixa.append(numero, document.createTextNode(ponto.nome));
       pontos.append(caixa);
     }
+
+    // Os dois contatos numa linha só, cada nome colado no seu telefone: no
+    // impresso, número quebrado ao meio é número perdido. O rodapé é o lugar
+    // mais apertado da peça, e o medidor lá embaixo avisa se não couber.
+    const contatos = document.querySelector('[data-lista="contatos"]');
+    contatos.innerHTML = "";
+    contatos.append(document.createTextNode("Informações:"));
+    contatos.append(document.createElement("br"));
+    listas.contatos.forEach((contato, i) => {
+      if (i > 0) contatos.append(document.createTextNode(" · "));
+      const par = document.createElement("span");
+      par.style.whiteSpace = "nowrap";
+      par.textContent = `${contato.nome} ${contato.telefone}`;
+      contatos.append(par);
+    });
 
     const categorias = document.querySelector('[data-lista="categorias"]');
     categorias.innerHTML = "";

@@ -3,7 +3,13 @@ import Link from "next/link";
 
 import { FormularioInscricao } from "@/app/componentes/formulario-inscricao";
 import { IconeWhatsapp } from "@/app/componentes/icone-whatsapp";
-import { CATEGORIAS, EVENTO, PONTOS_COLETA } from "@/lib/evento";
+import {
+  CATEGORIAS,
+  CONTATOS,
+  CONTATO_PRINCIPAL,
+  EVENTO,
+  PONTOS_COLETA,
+} from "@/lib/evento";
 
 const LINKS = [
   { href: "#causa", texto: "A causa" },
@@ -261,7 +267,8 @@ export default function Pagina() {
               </p>
               <p className="mt-5 rounded-xl border border-white/10 bg-petroleo-950/50 px-5 py-4 text-sm text-neve-300">
                 Brinquedo novo ou usado em bom estado, limpo e completo. Se
-                tiver dúvida se o seu serve, chame o {EVENTO.coordenador.split(" ")[0]}{" "}
+                tiver dúvida se o seu serve, chame o{" "}
+                {CONTATO_PRINCIPAL.nome.split(" ")[0]}{" "}
                 no WhatsApp antes de comprar.
               </p>
             </div>
@@ -412,20 +419,28 @@ export default function Pagina() {
 
             <div className="rounded-3xl border border-petroleo-700 bg-petroleo-900/50 p-7 sm:p-9">
               <p className="rotulo text-xs text-limao">Mais informações</p>
-              <p className="titulo mt-4 text-3xl text-white">
-                {EVENTO.coordenador}
+              <p className="mt-3 text-neve-300">
+                Dúvida sobre percurso, brinquedo ou inscrição? Chame um dos
+                dois no WhatsApp.
               </p>
-              <p className="mt-2 text-neve-300">{EVENTO.cargo}</p>
 
-              <a
-                href={`https://wa.me/${EVENTO.whatsapp}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-7 inline-flex items-center gap-2.5 rounded-xl bg-limao px-6 py-3.5 font-bold text-petroleo-950 transition hover:bg-limao-claro"
-              >
-                <IconeWhatsapp className="size-5" />
-                {EVENTO.telefone}
-              </a>
+              <ul className="mt-7 space-y-5">
+                {CONTATOS.map((contato) => (
+                  <li key={contato.whatsapp}>
+                    <p className="titulo text-2xl text-white">{contato.nome}</p>
+                    <p className="mt-1 text-sm text-neve-300">{contato.papel}</p>
+                    <a
+                      href={`https://wa.me/${contato.whatsapp}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-3 inline-flex items-center gap-2.5 rounded-xl bg-limao px-5 py-3 font-bold text-petroleo-950 transition hover:bg-limao-claro"
+                    >
+                      <IconeWhatsapp className="size-5" />
+                      {contato.telefone}
+                    </a>
+                  </li>
+                ))}
+              </ul>
 
               <div className="mt-9 border-t border-white/10 pt-7">
                 <p className="rotulo text-[0.65rem] text-neve-500">
@@ -478,15 +493,18 @@ export default function Pagina() {
             >
               Lista de inscritos
             </Link>
-            <a
-              href={`https://wa.me/${EVENTO.whatsapp}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-white transition hover:text-limao"
-            >
-              <IconeWhatsapp className="size-4" />
-              {EVENTO.telefone}
-            </a>
+            {CONTATOS.map((contato) => (
+              <a
+                key={contato.whatsapp}
+                href={`https://wa.me/${contato.whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-white transition hover:text-limao"
+              >
+                <IconeWhatsapp className="size-4" />
+                {contato.nome.split(" ")[0]} · {contato.telefone}
+              </a>
+            ))}
             <Link
               href="/painel"
               className="text-sm text-neve-500 transition hover:text-neve-300"

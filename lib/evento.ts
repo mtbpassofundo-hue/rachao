@@ -32,12 +32,6 @@ export const EVENTO = {
   prazoBrinquedo: "26 de novembro de 2026",
   prazoBrinquedoCurto: "26/11/2026",
 
-  coordenador: "Yuri Menezes",
-  cargo: "Coordenador de ciclismo do Clube Comercial",
-  telefone: "(54) 99180-9050",
-  /** Só dígitos, com 55 na frente — é o formato que o wa.me exige. */
-  whatsapp: "5554991809050",
-
   /**
    * Endereço público, usado na miniatura que o WhatsApp mostra e impresso no
    * flyer.
@@ -50,6 +44,32 @@ export const EVENTO = {
   /** O mesmo endereço sem o https, que é como ele aparece no flyer. */
   siteCurto: "rachaobike.vercel.app",
 } as const;
+
+/**
+ * Quem responde dúvida, na ordem em que aparece.
+ *
+ * O primeiro é o contato principal: é o nome que vai sozinho onde só cabe um,
+ * como na tela de inscrições encerradas. Os dois aparecem juntos no flyer, na
+ * página e no rodapé.
+ */
+export const CONTATOS = [
+  {
+    nome: "Yuri Menezes",
+    papel: "Coordenador de ciclismo do Clube Comercial",
+    telefone: "(54) 99180-9050",
+    /** Só dígitos, com 55 na frente — é o formato que o wa.me exige. */
+    whatsapp: "5554991809050",
+  },
+  {
+    nome: "Gean Bedin",
+    papel: "Rachão da Noite (RDN)",
+    telefone: "(54) 99145-0676",
+    whatsapp: "5554991450676",
+  },
+] as const;
+
+/** Atalho para o contato principal, que é quem aparece quando só cabe um. */
+export const CONTATO_PRINCIPAL = CONTATOS[0];
 
 /**
  * O instante em que a inscrição fecha: fim do dia 26/11/2026 no horário de

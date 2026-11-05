@@ -2,7 +2,12 @@
 
 import { headers } from "next/headers";
 
-import { EVENTO, categoriaPorId, inscricoesEncerradas } from "@/lib/evento";
+import {
+  CONTATO_PRINCIPAL,
+  EVENTO,
+  categoriaPorId,
+  inscricoesEncerradas,
+} from "@/lib/evento";
 import { dentroDoLimite } from "@/lib/limite";
 import { supabaseAdmin } from "@/lib/supabase";
 import { esquemaInscricao, precisaResponsavel } from "@/lib/validacao";
@@ -31,7 +36,7 @@ export async function inscrever(
   if (inscricoesEncerradas()) {
     return {
       estado: "erro",
-      mensagem: `As inscrições fecharam em ${EVENTO.prazoBrinquedoCurto}. Fale com ${EVENTO.coordenador} no ${EVENTO.telefone}.`,
+      mensagem: `As inscrições fecharam em ${EVENTO.prazoBrinquedoCurto}. Fale com ${CONTATO_PRINCIPAL.nome} no ${CONTATO_PRINCIPAL.telefone}.`,
       campos: {},
     };
   }

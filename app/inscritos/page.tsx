@@ -4,7 +4,7 @@ import Link from "next/link";
 import { connection } from "next/server";
 
 import { Lista } from "@/app/inscritos/lista";
-import { CATEGORIAS, EVENTO } from "@/lib/evento";
+import { CATEGORIAS, CONTATOS, EVENTO } from "@/lib/evento";
 import { supabaseAdmin, type InscritoPublico } from "@/lib/supabase";
 
 export const metadata: Metadata = {
@@ -110,7 +110,10 @@ export default async function InscritosPagina() {
 
         <p className="mt-14 border-t border-white/10 pt-8 text-sm text-neve-500">
           Não achou seu nome? Confira se a inscrição foi concluída ou fale com{" "}
-          {EVENTO.coordenador}, {EVENTO.telefone}.
+          {CONTATOS.map((contato) => `${contato.nome} ${contato.telefone}`).join(
+            " ou ",
+          )}
+          .
         </p>
       </main>
     </>

@@ -13,6 +13,7 @@ import { inscrever, type EstadoInscricao } from "@/app/acoes";
 import {
   CATEGORIAS,
   CATEGORIA_INFANTIL,
+  CONTATOS,
   EVENTO,
   PONTOS_COLETA,
   TERMO_MENOR,
@@ -110,16 +111,25 @@ export function FormularioInscricao() {
           As inscrições do {EVENTO.nome} foram até{" "}
           {EVENTO.prazoBrinquedoCurto}, junto com o prazo de entrega do
           brinquedo. Se você entregou o brinquedo e não conseguiu se inscrever,
-          fale com {EVENTO.coordenador}.
+          fale com a organização.
         </p>
-        <a
-          href={`https://wa.me/${EVENTO.whatsapp}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-7 inline-flex items-center gap-2.5 rounded-xl bg-limao px-7 py-3.5 font-bold text-petroleo-950 transition hover:bg-limao-claro"
-        >
-          Falar com {EVENTO.coordenador.split(" ")[0]}
-        </a>
+        <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          {CONTATOS.map((contato, i) => (
+            <a
+              key={contato.whatsapp}
+              href={`https://wa.me/${contato.whatsapp}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={
+                i === 0
+                  ? "inline-flex items-center gap-2.5 rounded-xl bg-limao px-7 py-3.5 font-bold text-petroleo-950 transition hover:bg-limao-claro"
+                  : "inline-flex items-center gap-2.5 rounded-xl border border-white/20 px-7 py-3.5 font-semibold text-white transition hover:border-limao hover:text-limao"
+              }
+            >
+              Falar com {contato.nome.split(" ")[0]}
+            </a>
+          ))}
+        </div>
       </div>
     );
   }
@@ -167,7 +177,10 @@ export function FormularioInscricao() {
         </div>
 
         <p className="mx-auto mt-6 max-w-lg text-sm text-neve-300">
-          Dúvidas: {EVENTO.coordenador}, {EVENTO.telefone}.
+          Dúvidas:{" "}
+          {CONTATOS.map((contato) => `${contato.nome} ${contato.telefone}`).join(
+            " · ",
+          )}
         </p>
 
         <a
