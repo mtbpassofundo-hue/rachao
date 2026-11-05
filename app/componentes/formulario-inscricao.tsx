@@ -1,6 +1,13 @@
 "use client";
 
-import { useActionState, useId, useState, useSyncExternalStore } from "react";
+import {
+  useActionState,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 
 import { inscrever, type EstadoInscricao } from "@/app/acoes";
 import {
@@ -32,11 +39,47 @@ function Erro({ id, texto }: { id: string; texto?: string }) {
 export function FormularioInscricao() {
   const [estado, acao, enviando] = useActionState(inscrever, ESTADO_INICIAL);
   const [categoria, setCategoria] = useState("");
+  const [nome, setNome] = useState("");
   const [nascimento, setNascimento] = useState("");
   const [cpf, setCpf] = useState("");
+  const [cidade, setCidade] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
+  const [nomeResponsavel, setNomeResponsavel] = useState("");
   const [cpfResponsavel, setCpfResponsavel] = useState("");
+  const [ponto, setPonto] = useState("");
+  const [termo, setTermo] = useState(false);
+  const [confirmacao, setConfirmacao] = useState(false);
   const base = useId();
+  const formulario = useRef<HTMLFormElement>(null);
+
+  /**
+   * Devolve as marcações depois de cada resposta do servidor.
+   *
+   * O React 19 limpa o formulário sozinho quando a ação termina — inclusive
+   * quando ela volta com erro. Campo de texto controlado se recupera na
+   * renderização seguinte, porque o `value` vem do estado. Rádio e caixa de
+   * seleção não: a prop `checked` continua igual à de antes, então o React
+   * não reescreve o que o reset acabou de desmarcar.
+   *
+   * Sem isto, quem errasse um dígito do CPF perdia a modalidade escolhida, o
+   * ponto de coleta e o termo — e descobria isso só depois de enviar de novo.
+   */
+  useEffect(() => {
+    const form = formulario.current;
+    if (!form) return;
+    const marcar = (seletor: string, ligado: boolean) => {
+      const campo = form.querySelector<HTMLInputElement>(seletor);
+      if (campo) campo.checked = ligado;
+    };
+    for (const item of CATEGORIAS) {
+      marcar(`input[name="categoria"][value="${item.id}"]`, categoria === item.id);
+    }
+    for (const lugar of PONTOS_COLETA) {
+      marcar(`input[name="pontoColeta"][value="${lugar.id}"]`, ponto === lugar.id);
+    }
+    marcar('input[name="termo"]', termo);
+    marcar('input[name="confirmacao"]', confirmacao);
+  }, [estado, categoria, ponto, termo, confirmacao]);
 
   // A página é gerada uma vez e servida a todo mundo, então quem decide se o
   // prazo virou é o relógio de quem está lendo. O relógio é um sistema externo
@@ -139,6 +182,7 @@ export function FormularioInscricao() {
 
   return (
     <form
+      ref={formulario}
       action={acao}
       noValidate
       className="rounded-2xl border border-petroleo-700 bg-petroleo-900/80 p-6 shadow-2xl shadow-black/40 sm:p-8"
@@ -204,6 +248,8 @@ export function FormularioInscricao() {
             autoComplete="name"
             maxLength={80}
             placeholder="Como está no documento"
+            value={nome}
+            onChange={(evento) => setNome(evento.target.value)}
             className="campo"
             aria-invalid={Boolean(erros.nome)}
             aria-describedby={erros.nome ? `${base}-erro-nome` : undefined}
@@ -275,6 +321,8 @@ export function FormularioInscricao() {
             maxLength={60}
             autoComplete="address-level2"
             placeholder="Passo Fundo"
+            value={cidade}
+            onChange={(evento) => setCidade(evento.target.value)}
             className="campo"
             aria-invalid={Boolean(erros.cidade)}
             aria-describedby={erros.cidade ? `${base}-erro-cidade` : undefined}
@@ -337,6 +385,8 @@ export function FormularioInscricao() {
                 type="text"
                 maxLength={80}
                 placeholder="Pai, mãe ou responsável legal"
+                value={nomeResponsavel}
+                onChange={(evento) => setNomeResponsavel(evento.target.value)}
                 className="campo"
                 aria-invalid={Boolean(erros.responsavelNome)}
                 aria-describedby={
@@ -390,6 +440,8 @@ export function FormularioInscricao() {
               type="checkbox"
               name="termo"
               value="sim"
+              checked={termo}
+              onChange={(evento) => setTermo(evento.target.checked)}
               className="mt-0.5 size-5 shrink-0 accent-[var(--color-limao)]"
               aria-invalid={Boolean(erros.termo)}
             />
@@ -410,18 +462,20 @@ export function FormularioInscricao() {
           É o brinquedo que vale a inscrição.
         </p>
         <div className="grid gap-3 sm:grid-cols-2">
-          {PONTOS_COLETA.map((ponto) => (
-            <label key={ponto.id} className="escolha" htmlFor={`${base}-${ponto.id}`}>
+          {PONTOS_COLETA.map((lugar) => (
+            <label key={lugar.id} className="escolha" htmlFor={`${base}-${lugar.id}`}>
               <input
-                id={`${base}-${ponto.id}`}
+                id={`${base}-${lugar.id}`}
                 type="radio"
                 name="pontoColeta"
-                value={ponto.id}
+                value={lugar.id}
+                checked={ponto === lugar.id}
+                onChange={() => setPonto(lugar.id)}
                 className="sr-only"
               />
-              <span className="block font-bold text-white">{ponto.nome}</span>
+              <span className="block font-bold text-white">{lugar.nome}</span>
               <span className="mt-1 block text-sm text-neve-300">
-                {ponto.tipo}
+                {lugar.tipo}
               </span>
             </label>
           ))}
@@ -436,6 +490,8 @@ export function FormularioInscricao() {
             type="checkbox"
             name="confirmacao"
             value="sim"
+            checked={confirmacao}
+            onChange={(evento) => setConfirmacao(evento.target.checked)}
             className="mt-0.5 size-5 shrink-0 accent-[var(--color-limao)]"
             aria-invalid={Boolean(erros.confirmacao)}
           />

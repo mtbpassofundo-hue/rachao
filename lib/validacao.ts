@@ -164,8 +164,20 @@ export const esquemaInscricao = z
 
     // Vazio quando a inscrição é de maior de idade fora do Pedal Kids; o
     // superRefine abaixo é quem cobra quando faz falta.
-    responsavelNome: z.string().optional(),
-    responsavelCpf: z.string().optional(),
+    //
+    // A limpeza vale mesmo para o campo opcional: sem ela o CPF do
+    // responsável chegava ao banco escrito "999.888.555-83", com ponto e
+    // traço, e batia no CHECK que exige onze dígitos puros — enquanto o CPF
+    // de quem pedala, esse sim transformado, passava liso. O erro só aparecia
+    // na inscrição de criança, que é justamente a que não pode falhar.
+    responsavelNome: z
+      .string()
+      .optional()
+      .transform((valor) => limparNome(valor ?? "")),
+    responsavelCpf: z
+      .string()
+      .optional()
+      .transform((valor) => somenteDigitos(valor ?? "")),
     termo: z.boolean(),
 
     confirmacao: z.literal(

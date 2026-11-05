@@ -38,7 +38,12 @@ export async function inscrever(
 
   const ip = await ipDaRequisicao();
 
-  if (!dentroDoLimite(`inscricao:${ip}`, 8, 10 * 60 * 1000)) {
+  // Folgado de propósito. O freio existe para cortar dedo preso no botão e
+  // script bobo, não para limitar gente de verdade: num mutirão no wi-fi da
+  // Sede Campestre a turma toda sai pelo mesmo IP, e um teto baixo barraria
+  // quem chegou por último. Quem protege contra inscrição repetida é a
+  // unicidade do CPF, não isto.
+  if (!dentroDoLimite(`inscricao:${ip}`, 25, 10 * 60 * 1000)) {
     return {
       estado: "erro",
       mensagem:

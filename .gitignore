@@ -27,3 +27,4 @@ next-env.d.ts
 # saída dos scripts de conferência
 /scripts/teste.xlsx
 /scripts/conferencia.png
+/scripts/relatorio-teste.xlsx
